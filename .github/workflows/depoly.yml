@@ -1,9 +1,9 @@
 name: cd-dev
 
 on:
-  pull_request:
-    branches: [ develop ]
-    types: [ closed ]
+  push:
+    branches:
+      - main
 
 env:
   AWS_REGION: ap-northeast-2
