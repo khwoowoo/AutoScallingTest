@@ -6,9 +6,9 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  S3_BUCKET_NAME: prod-wekids-s3
-  CODE_DEPLOY_APPLICATION_NAME: prod-wekids-codedepoly
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: prod-wekids-depoly-group
+  S3_BUCKET_NAME: release-wekids-depoly
+  CODE_DEPLOY_APPLICATION_NAME: release-wekids
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: release-wekids-group
 
 permissions:
   contents: read
@@ -51,7 +51,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: prod-wekids-ecr
+          ECR_REPOSITORY: wekids-ecr
           IMAGE_TAG: latest
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -68,4 +68,5 @@ jobs:
           --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+          --ignore-application-stop-failures \
           --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip

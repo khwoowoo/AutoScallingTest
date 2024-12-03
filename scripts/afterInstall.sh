@@ -1,7 +1,7 @@
 #!/bin/bash
 REPOSITORY=/home/ubuntu/wekids
 CONTAINER_NAME=wekids-spring
-ECR_REGISTRY=180294195931.dkr.ecr.ap-northeast-2.amazonaws.com
+ECR_REGISTRY=992382462285.dkr.ecr.ap-northeast-2.amazonaws.com
 
 cd $REPOSITORY
 
