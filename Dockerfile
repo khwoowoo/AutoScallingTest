@@ -8,8 +8,8 @@ RUN ./gradlew clean build -x test
 FROM openjdk:17-ea-11-jdk-slim AS RUNNER
 RUN mkdir /app
 # 수정된 JAR 복사 경로
-COPY --from=BUILDER /app_source/build/libs/*.jar /app
+COPY --from=BUILDER /app_source/build/libs/*.jar /app/app.jar
 WORKDIR /app
 ENV TZ=Asia/Seoul
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/autoscaling-test-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Dfile.encoding=UTF-8", "-Dspring.profiles.active=release", "-jar", "/app/app.jar"]
